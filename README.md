@@ -327,13 +327,13 @@ Nhóm này biến ý tưởng mơ hồ thành tài liệu đủ rõ để giao c
 - **Sau một phiên code**: `/builder-skills:retro` đọc lại phiên (mặc định là phiên hiện tại) và đề xuất, theo thứ tự nghiêm trọng, cách cải thiện môi trường cho agent: thêm con trỏ điều hướng, thêm lint/test/hook tự động, bổ sung chuẩn code cho bước review, rút gọn `CLAUDE.md`, giảm tool tốn token…
 - **Việc chỉ người làm được** (tạo API key, thêm CI secret, bấm qua dashboard bên thứ ba, migration một lần): nói *"tạo wizard hướng dẫn mình setup Stripe"*. `wizard` sinh một script bash tương tác, dẫn từng bước, mở sẵn link, hỏi và ghi giá trị vào `.env`/secret.
 - **Bảo trì bộ skill**: mở Claude trong bản clone của repo `builder-skills` rồi gõ `/builder-skills:doctor-audit` (hoặc `/doctor-audit` nếu chạy bằng `claude --plugin-dir .`). Skill chạy 5 bước:
-  1. **Kiểm tra điều kiện**: đúng repo, working tree sạch.
+  1. **Kiểm tra điều kiện**: đúng repo, có thay đổi chưa commit thì hỏi trước.
   2. **Đồng bộ**: clone repo gốc, so với commit đã ghi trong [`upstream.json`](skills/doctor-audit/references/upstream.json), chỉ dịch phần thay đổi, giữ nguyên các chỗ cố ý khác bản gốc, báo skill gốc mới chưa dịch.
   3. **Test**: script kiểm tra tĩnh (frontmatter, link hỏng, skill không tồn tại, đoạn chưa dịch, link nội bộ lọt vào repo public…) và subagent chạy thử khô từng skill.
   4. **Đề xuất**: ghi báo cáo `docs/audit/<ngày>.md` gồm phần nên lược bớt, nên cải thiện, cần bạn quyết.
   5. **Áp dụng** đúng những đề xuất bạn chọn, tăng version, hỏi trước khi commit/push.
 
-  Chạy từng phần: `/doctor-audit sync`, `/doctor-audit test`, `/doctor-audit review`, hoặc kèm tên skill (`/doctor-audit implement pr`). Nên chạy mỗi tháng một lần, hoặc khi repo gốc có bản mới.
+  Chạy từng phần: `/doctor-audit sync`, `/doctor-audit test`, `/doctor-audit review` (ghép được: `test review`), hoặc kèm tên skill (`/doctor-audit implement pr`). Nên chạy mỗi tháng một lần, hoặc khi repo gốc có bản mới.
 - **Viết skill hoặc `CLAUDE.md`**: `writing-for-agents` tự bật khi bạn tạo/sửa skill hay `CLAUDE.md`/`AGENTS.md`, giúp tài liệu gọn, đúng chỗ và agent làm theo được.
 
 ---
@@ -394,7 +394,7 @@ Plugin tự nạp mọi thư mục trong `skills/`, nên thêm skill mới **kh�
    ```
 
    Script báo lỗi nếu thiếu frontmatter hoặc `name` không khớp tên thư mục.
-5. **Kiểm tra toàn bộ** bằng `python skills/doctor-audit/scripts/audit.py check <tên-skill>` (link hỏng, skill không tồn tại, đoạn chưa dịch, link nội bộ…).
+5. **Kiểm tra toàn bộ** bằng `python3 skills/doctor-audit/scripts/audit.py check <tên-skill>` (link hỏng, skill không tồn tại, đoạn chưa dịch, link nội bộ…).
 6. **Cập nhật README**: thêm một dòng vào bảng skill ở đầu file, và một mục hướng dẫn dùng nếu skill cần chuẩn bị gì.
 7. **Tăng `version`** trong `.claude-plugin/plugin.json` (vd `0.1.0` → `0.2.0` khi thêm skill, `0.1.1` khi sửa nhỏ), rồi commit và push. Mọi người lấy bản mới bằng `claude plugin marketplace update tannguyenho` rồi `claude plugin update builder-skills@tannguyenho`.
 

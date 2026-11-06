@@ -6,11 +6,17 @@ Mục tiêu của một skill: agent đọc xong làm đúng việc, với ít c
 
 - **Câu không thay đổi hành vi (no-op):** lời khuyên chung mà agent vốn đã làm ("viết code sạch", "cẩn thận"), câu khích lệ, câu nhắc lại tiêu đề. Phép thử: xoá câu đó đi, agent có làm khác không? Không thì nó thừa.
 - **Lặp trong cùng skill:** một quy tắc được nói lại ở nhiều bước. Giữ một chỗ, chỗ còn lại chỉ trỏ tới nó.
-- **Lặp giữa các skill:** file giống hoặc gần giống nhau ở nhiều skill (script đã báo file trùng y hệt; tự tìm thêm loại gần giống, vd `honesty-protocol.md`, `research-principles.md` ở cả `product-design` và `product-competitors`). Mỗi skill phải đóng gói được riêng lẻ cho claude.ai, nên lặp đôi khi là bắt buộc. Khi đó đề xuất giữ hai bản **giống hệt nhau** để dễ đồng bộ, thay vì để mỗi bản lệch một kiểu.
+- **Lặp giữa các skill:** file giống hoặc gần giống nhau ở nhiều skill (script báo cả file trùng y hệt lẫn file cùng tên gần giống, vd `honesty-protocol.md`, `research-principles.md` ở `product-design` và `product-competitors`). Mỗi skill phải đóng gói được riêng lẻ cho claude.ai, nên lặp đôi khi là bắt buộc. Khi đó đề xuất **thống nhất đoạn chung và thuật ngữ** (cùng một khái niệm thì cùng một chữ, nhất là nhãn mà bước kiểm chứng dò theo). Phần khác nhau vì bản gốc vốn khác thì giữ nguyên.
 - **Nội dung lỗi thời:** nhắc tới skill, lệnh, tool hay tính năng không còn tồn tại; số dòng hoặc bảng mục lục không còn khớp file.
 - **SKILL.md quá dài:** phần chỉ cần ở một nhánh hiếm gặp thì chuyển sang `references/`, kèm một dòng nói khi nào đọc.
 
-Riêng **skill dịch**, lược một đoạn có trong bản gốc là tạo thêm một `adaptation`. Lần đồng bộ sau phải giữ chỗ lược đó, nên chỉ đề xuất khi được nhiều. Đánh dấu rõ là "khác bản gốc" trong đề xuất.
+## Skill dịch: đề xuất nào làm khác bản gốc
+
+Lược hay sửa một đoạn có trong bản gốc là tạo thêm một `adaptation`: lần đồng bộ sau phải giữ chỗ đó, tức là thêm việc bảo trì. Nên chỉ đề xuất khi được ít nhất một trong hai: agent làm đúng hơn ở một chỗ cụ thể (sửa lỗi, hết phải đoán), hoặc bớt từ khoảng 10 dòng trở lên. Đánh dấu *Khác bản gốc* trong đề xuất.
+
+Để biết một đoạn có trong bản gốc không, xem file gốc ở `synced_commit` của `upstream.json`: `git -C <clone> show <synced_commit>:<path>` nếu đã clone ở Bước 2, hoặc tải `https://raw.githubusercontent.com/<owner/repo>/<synced_commit>/<path>`.
+
+Lỗi **có sẵn ở bản gốc** (gốc cũng mâu thuẫn, cũng sót) thì vẫn đề xuất sửa ở đây, ghi *Lỗi có sẵn ở bản gốc*, và nêu trong báo cáo là có thể báo lên repo gốc. Soạn sẵn nội dung issue nếu user muốn, nhưng không tự đăng.
 
 ## 🔧 Cải thiện
 
@@ -24,7 +30,7 @@ Riêng **skill dịch**, lược một đoạn có trong bản gốc là tạo t
 
 ## ❓ Cần user quyết
 
-Đưa vào đây khi đề xuất phụ thuộc vào cách team làm việc chứ không phải chất lượng skill. Ví dụ:
+Đưa vào đây khi (1) đề xuất phụ thuộc vào cách team làm việc chứ không phải chất lượng skill, hoặc (2) bạn chưa chắc một đoạn có thừa không. Ví dụ:
 
 - bỏ hẳn một skill ít dùng;
 - đổi một skill gọi tay sang tự động (hoặc ngược lại);

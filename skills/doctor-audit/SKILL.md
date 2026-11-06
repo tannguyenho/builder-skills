@@ -22,20 +22,21 @@ Tài nguyên trong skill:
 - [references/translation-rules.md](references/translation-rules.md): quy tắc dịch và đổi tên. Đọc trước khi dịch bất kỳ thay đổi nào.
 - [references/review-criteria.md](references/review-criteria.md): tiêu chí chấm từng skill ở Bước 4.
 
-Trong mọi lệnh dưới đây, `AUDIT` là đường dẫn `skills/doctor-audit/scripts/audit.py` tính từ gốc repo.
+Mọi lệnh dưới đây chạy từ gốc repo. Dùng `python3` (trên macOS thường không có `python`); máy chỉ có `python` thì thay tương ứng.
 
 ## Phạm vi lần chạy
 
 Đọc tham số user gõ kèm lệnh:
 
-- Không tham số: chạy đủ cả bốn bước cho mọi skill.
-- `sync`, `test`, `review`: chỉ chạy bước tương ứng (Bước 2, 3 hoặc 4). Bước 1 luôn chạy.
+- Không tham số: chạy đủ năm bước cho mọi skill.
+- Chế độ `sync`, `test`, `review` (ghép được, vd `test review`): chỉ chạy các bước tương ứng (Bước 2, 3, 4). Bước 1 luôn chạy. Bước 4 hoặc 2 có chạy thì Bước 5 chạy sau đó. Ba từ này luôn hiểu là chế độ, không phải tên skill.
 - Tên skill (vd `/doctor-audit implement pr`): giới hạn Bước 3–4 vào các skill đó. Bước 2 vẫn so cả repo gốc, vì một thay đổi ở gốc có thể chạm nhiều skill cùng lúc.
+- Lần chạy nào cũng kết thúc bằng một báo cáo theo mẫu ở Bước 4. Bước nào không chạy thì ghi "Không chạy" vào mục của bước đó, để người đọc phân biệt "đã kiểm tra, không có gì" với "chưa kiểm tra".
 
 ## Bước 1: Kiểm tra điều kiện
 
 1. Xác nhận đang ở gốc repo builder-skills: `.claude-plugin/plugin.json` có `"name": "builder-skills"`. Nếu không phải, dừng lại và bảo user mở Claude trong bản clone của repo. Skill này sửa chính mã nguồn của bộ skill, nên chạy từ bản cài plugin thì không có gì để sửa.
-2. `git status --short`: nếu có thay đổi chưa commit, báo user và hỏi có làm tiếp không. Lý do: các thay đổi của lần khám sẽ trộn lẫn với việc dở dang, rất khó review.
+2. `git status --short`: nếu có thay đổi chưa commit, báo user và hỏi có làm tiếp không (nên commit hoặc stash trước). Lý do: các thay đổi của lần khám sẽ trộn lẫn với việc dở dang, rất khó review.
 3. Đọc `CLAUDE.md` của repo. Quy ước ở đó (tiếng Việt, không tiền tố `uxf-`, không đưa link nội bộ, chạy `package_skill.py`, tăng version) áp dụng cho mọi thay đổi bên dưới.
 
 ## Bước 2: Đồng bộ với repo gốc
@@ -50,7 +51,7 @@ Trong mọi lệnh dưới đây, `AUDIT` là đường dẫn `skills/doctor-aud
 2. Chạy so sánh:
 
    ```bash
-   python AUDIT upstream --clone mattpocock/skills=<tmp>/mp --clone ferdinandobons/startup-skill=<tmp>/su
+   python3 skills/doctor-audit/scripts/audit.py upstream --clone mattpocock/skills=<tmp>/mp --clone ferdinandobons/startup-skill=<tmp>/su
    ```
 
    Kết quả có bốn loại dòng: ✅ không đổi, 🔄 skill có file gốc thay đổi, 🆕 skill gốc mới chưa dịch, ❌ đường dẫn gốc đã mất.
@@ -69,16 +70,16 @@ Trong mọi lệnh dưới đây, `AUDIT` là đường dẫn `skills/doctor-aud
 6. Đồng bộ xong một repo thì ghi commit mới:
 
    ```bash
-   python AUDIT mark-synced <owner/repo> <commit HEAD của clone>
+   python3 skills/doctor-audit/scripts/audit.py mark-synced <owner/repo> <commit HEAD của clone>
    ```
 
    Chỉ ghi khi **mọi** skill 🔄 của repo đó đã được xử lý. Ghi sớm thì lần sau script sẽ không còn thấy phần chưa dịch.
 
 ## Bước 3: Test
 
-**3a. Kiểm tra tĩnh.** Chạy `python AUDIT check [tên-skill ...]` và `python scripts/package_skill.py`. Script kiểm tra:
+**3a. Kiểm tra tĩnh.** Chạy `python3 skills/doctor-audit/scripts/audit.py check [tên-skill ...]`. Script này đã bao gồm phần kiểm tra của `scripts/package_skill.py`, nên không cần chạy thêm lệnh đó ở đây (lệnh đó còn ghi ra `dist/`). Script kiểm tra:
 
-- frontmatter: `name` trùng tên thư mục, có `description`, `description` không quá 1024 ký tự;
+- frontmatter: `name` trùng tên thư mục, có `description`, `description` không quá 1024 ký tự (cảnh báo khi trên 900);
 - link và file được nhắc tới phải tồn tại;
 - skill được nhắc tới phải có trong repo;
 - skill được skill khác gọi thì không được có `disable-model-invocation`;
@@ -86,7 +87,7 @@ Trong mọi lệnh dưới đây, `AUDIT` là đường dẫn `skills/doctor-aud
 - đoạn văn còn tiếng Anh;
 - email, token, link Figma/Drive (repo public);
 - skill phải có trong bảng của README;
-- file trùng nội dung giữa các skill.
+- file trùng y hệt, hoặc cùng tên mà gần giống nhau, giữa các skill.
 
 Sửa hết lỗi ❌. Không ổn thì báo user, đừng bỏ qua. Cảnh báo ⚠️ thì đưa vào báo cáo ở Bước 4.
 
@@ -104,15 +105,15 @@ Subagent báo lại theo ba mục:
 - (b) bước nào cần thông tin hay công cụ mà skill không nói lấy ở đâu;
 - (c) chỗ nào phải đoán.
 
-Giao song song, tối đa khoảng 5 subagent một lượt.
+Giao song song, tối đa khoảng 5 subagent một lượt. Không có công cụ subagent (vd trên claude.ai) thì tự đi qua từng skill trên giấy, báo theo đúng ba mục trên. Cách này kém khách quan hơn vì bạn đã đọc skill trước, nên cố đọc như người mới.
 
 ## Bước 4: Đề xuất lược bớt và cải thiện
 
 Chấm từng skill theo [review-criteria.md](references/review-criteria.md). Dùng thêm kết quả của Bước 3 và các file trùng mà script đã báo. Nhiều skill thì chia nhóm cho subagent, mỗi subagent đọc đầy đủ skill trong nhóm mình rồi trả về đề xuất theo đúng mẫu bên dưới.
 
-Mỗi đề xuất phải **chỉ ra đúng vị trí** (file và đoạn), nêu **vì sao**, và nêu **được gì** (bớt bao nhiêu dòng, hoặc agent làm đúng hơn ở chỗ nào). Đề xuất chung chung kiểu "nên viết gọn hơn" thì không dùng được. Chưa chắc một đoạn có thừa hay không thì xếp vào "Cần user quyết", đừng xếp vào "Lược bớt".
+Mỗi đề xuất phải **chỉ ra đúng vị trí** (file và đoạn), nêu **vì sao**, và nêu **được gì** (bớt bao nhiêu dòng, hoặc agent làm đúng hơn ở chỗ nào). Đề xuất chung chung kiểu "nên viết gọn hơn" thì không dùng được. Khi nào xếp vào "Cần user quyết": xem [review-criteria.md](references/review-criteria.md).
 
-Ghi báo cáo vào `docs/audit/<YYYY-MM-DD>.md` (tạo thư mục nếu chưa có) theo mẫu:
+Ghi báo cáo vào `docs/audit/<YYYY-MM-DD>.md` (tạo thư mục nếu chưa có; file đã tồn tại thì thêm hậu tố `-2`, `-3`…, đừng ghi đè). Theo mẫu dưới đây; đề xuất đánh số liên tục trong cả báo cáo để user chọn theo số:
 
 ```markdown
 # Doctor audit — <ngày>
@@ -125,12 +126,20 @@ Ghi báo cáo vào `docs/audit/<YYYY-MM-DD>.md` (tạo thư mục nếu chưa c�
 
 ## Đã đồng bộ
 | Skill | File gốc thay đổi | Đã làm |
+(hoặc "Không chạy" / "Không có commit mới")
+
+## Kiểm tra tĩnh
+<các ❌ đã sửa, các ⚠️ còn lại, file trùng/gần trùng — hoặc "Không chạy">
+
+## Chạy thử khô
+### `<tên-skill>` — yêu cầu thử: "<câu user gõ>"
+- (a)/(b)/(c) <chỗ chưa rõ>
 
 ## Đề xuất theo skill
 ### `<tên-skill>`
-- ✂️ **Lược bớt** — `<file>` § <đoạn>: <vì sao thừa>. Ước bớt ~<n> dòng.
-- 🔧 **Cải thiện** — `<file>` § <đoạn>: <vấn đề> → <đề xuất cụ thể>.
-- ❓ **Cần user quyết** — <câu hỏi>.
+1. ✂️ **Lược bớt** — `<file>` § <đoạn>: <vì sao thừa>. Được gì: bớt ~<n> dòng. [*Khác bản gốc*]
+2. 🔧 **Cải thiện** — `<file>` § <đoạn>: <vấn đề> → <đề xuất cụ thể>. Được gì: <…>. [*Khác bản gốc* | *Lỗi có sẵn ở bản gốc*]
+3. ❓ **Cần user quyết** — <câu hỏi, kèm các phương án>.
 
 ## Không cần làm gì
 <các skill ✅>
@@ -141,7 +150,7 @@ Trình bày báo cáo cho user dạng danh sách đánh số, nhóm theo skill. 
 ## Bước 5: Áp dụng và hoàn tất
 
 1. Áp dụng các đề xuất user đã chọn. Đề xuất nào chạm vào skill dịch thì xem lại `adaptations`. Nếu thay đổi là cố ý khác bản gốc, ghi thêm một dòng vào `adaptations`, để lần đồng bộ sau không ghi đè mất.
-2. Chạy lại `python AUDIT check` và `python scripts/package_skill.py`, rồi xoá `dist/`.
+2. Chạy lại `python3 skills/doctor-audit/scripts/audit.py check` và `python3 scripts/package_skill.py`, rồi xoá `dist/`.
 3. Cập nhật bảng skill và hướng dẫn trong `README.md` nếu skill đổi chức năng, đổi tên, hoặc có skill mới.
 4. Tăng `version` trong `.claude-plugin/plugin.json`: chỉ sửa nhỏ hoặc đồng bộ thì tăng số cuối (`0.6.0` → `0.6.1`); thêm hay bớt skill thì tăng số giữa.
 5. Tóm tắt cho user: đã đồng bộ gì, đã sửa gì, còn gì để lại. Hỏi user có muốn commit và push không, và push lên nhánh nào. Báo cáo trong `docs/audit/` commit cùng nếu user muốn giữ lịch sử khám.

@@ -15,6 +15,7 @@ Cách dùng (chạy từ gốc repo builder-skills):
 from __future__ import annotations
 
 import argparse
+import difflib
 import hashlib
 import json
 import re
@@ -31,6 +32,9 @@ SKILLS = ROOT / "skills"
 MANIFEST = SKILL_DIR / "references" / "upstream.json"
 
 DESC_MAX = 1024          # giới hạn độ dài description của Claude
+DESC_WARN = 900          # sát giới hạn: thêm một câu kích hoạt là vượt
+NEAR_DUP = 0.6           # lọc nhanh theo ký tự
+NEAR_DUP_LINES = 0.3     # tỉ lệ dòng giống nhau từ mức này mới báo
 BODY_WARN = 500          # SKILL.md dài hơn thì nên tách references/
 VI_CHARS = re.compile(r"[ăâđêôơưáàảãạấầẩẫậắằẳẵặéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ]", re.I)
 SECRET_PATTERNS = {
@@ -124,6 +128,8 @@ def check(names: list[str] | None) -> int:
             add("❌", "thiếu description")
         elif len(desc) > DESC_MAX:
             add("❌", f"description dài {len(desc)} ký tự (> {DESC_MAX})")
+        elif len(desc) > DESC_WARN:
+            add("⚠️", f"description dài {len(desc)}/{DESC_MAX} ký tự — sát giới hạn")
         elif n not in manual and len(desc) < 120:
             add("⚠️", f"description ngắn ({len(desc)} ký tự) — Claude có thể không tự gọi skill")
         if n.startswith("uxf-"):
@@ -180,6 +186,28 @@ def check(names: list[str] | None) -> int:
         if len(paths) > 1 and involved & {t.name for t in targets}:
             dup_report.append(paths)
 
+    # file cùng tên, gần giống nhau (không y hệt) giữa các skill — dễ lệch thuật ngữ
+    by_name: dict[str, list[Path]] = defaultdict(list)
+    for f in SKILLS.rglob("*.md"):
+        if f.name != "SKILL.md":
+            by_name[f.name].append(f)
+    near_report = []
+    target_names = {t.name for t in targets}
+    for name, files in sorted(by_name.items()):
+        for i, a in enumerate(files):
+            for b in files[i + 1:]:
+                sa, sb = a.relative_to(SKILLS).parts[0], b.relative_to(SKILLS).parts[0]
+                if sa == sb or not ({sa, sb} & target_names):
+                    continue
+                ta, tb = a.read_text(encoding="utf-8"), b.read_text(encoding="utf-8")
+                if ta == tb:
+                    continue
+                ratio = difflib.SequenceMatcher(None, ta, tb, autojunk=False).quick_ratio()
+                if ratio >= NEAR_DUP:
+                    ratio = difflib.SequenceMatcher(None, ta.splitlines(), tb.splitlines()).ratio()
+                    if ratio >= NEAR_DUP_LINES:
+                        near_report.append((a.relative_to(SKILLS), b.relative_to(SKILLS), ratio))
+
     # README & plugin
     readme = (ROOT / "README.md").read_text(encoding="utf-8") if (ROOT / "README.md").exists() else ""
     for d in targets:
@@ -202,6 +230,11 @@ def check(names: list[str] | None) -> int:
         print("(Có thể cố ý — vd tdd.md cần có ở cả implement và implement-spec — nhưng khi sửa phải sửa đồng bộ.)\n")
         for paths in dup_report:
             print("- " + " = ".join(f"`{p}`" for p in sorted(paths)))
+    if near_report:
+        print("\n## File cùng tên, gần giống nhau giữa các skill")
+        print("(Xem có nên thống nhất đoạn chung và thuật ngữ không — xem review-criteria.md.)\n")
+        for a, b, r in near_report:
+            print(f"- `{a}` ≈ `{b}` — {r:.0%} dòng giống nhau")
     return 1 if errors else 0
 
 
