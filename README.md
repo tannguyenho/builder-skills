@@ -4,7 +4,7 @@ Bộ skill của **UX Foundation** cho Claude (Claude Code, app Claude desktop, 
 
 | Skill | Dùng để | Gọi bằng |
 | --- | --- | --- |
-| [`init-design`](skills/init-design/SKILL.md) | Dựng kiến trúc Figma cho app mới (Team → Folder → File) và ghi link vào `ARCHITECTURE.md` | "init design", "setup Figma cho app mới", "ghi link Figma vào ARCHITECTURE.md"… |
+| [`init-figma-design`](skills/init-figma-design/SKILL.md) | Dựng kiến trúc Figma cho app mới (Team → Folder → File) và ghi link vào `ARCHITECTURE.md` | "init design", "setup Figma cho app mới", "ghi link Figma vào ARCHITECTURE.md"… |
 
 ---
 
@@ -34,7 +34,7 @@ Plugin cài ở phạm vi user nên dùng được cả trong terminal lẫn tab
 claude plugin marketplace update tannguyenho
 ```
 
-> Nếu trước đây bạn đã chép tay skill vào `~/.claude/skills/init-design`, hãy xoá thư mục đó sau khi cài plugin để không bị trùng.
+> Nếu trước đây bạn đã chép tay skill vào `~/.claude/skills/init-figma-design`, hãy xoá thư mục đó sau khi cài plugin để không bị trùng.
 
 ### Cách B — Chép tay vào thư mục skills
 
@@ -56,16 +56,16 @@ Cách này không tự cập nhật: muốn bản mới thì `git pull` rồi ch
 claude.ai nhận skill dạng file `.skill` (zip của thư mục skill). Đóng gói:
 
 ```bash
-python scripts/package_skill.py init-design
+python scripts/package_skill.py init-figma-design
 ```
 
-File nằm ở `dist/init-design.skill`. Tải lên trong phần **Skills** ở Settings của claude.ai.
+File nằm ở `dist/init-figma-design.skill`. Tải lên trong phần **Skills** ở Settings của claude.ai.
 
-> Lưu ý: `init-design` cần trình duyệt để tạo Team/Folder trên Figma, nên chạy tốt nhất ở **tab Code của app Claude desktop**. Trên claude.ai chỉ dùng được phần ghi link có sẵn vào `ARCHITECTURE.md`.
+> Lưu ý: `init-figma-design` cần trình duyệt để tạo Team/Folder trên Figma, nên chạy tốt nhất ở **tab Code của app Claude desktop**. Trên claude.ai chỉ dùng được phần ghi link có sẵn vào `ARCHITECTURE.md`.
 
 ---
 
-## 2. Hướng dẫn dùng `init-design`
+## 2. Hướng dẫn dùng `init-figma-design`
 
 ### Skill làm gì
 
@@ -96,7 +96,7 @@ Nếu bạn **đã có sẵn** đủ team/folder/file và chỉ cần ghi link t
 ### Chạy
 
 1. Mở dự án của app trong Claude (thư mục sẽ chứa `ARCHITECTURE.md`).
-2. Gõ: `init design cho app <Tên app>` (hoặc gọi thẳng `/builder-skills:init-design` nếu cài bằng plugin, `/init-design` nếu chép tay).
+2. Gõ: `init design cho app <Tên app>` (hoặc gọi thẳng `/builder-skills:init-figma-design` nếu cài bằng plugin, `/init-figma-design` nếu chép tay).
 3. Skill sẽ:
    1. **Kiểm tra môi trường** và báo bảng ✅/❌ (trình duyệt, Figma MCP, đúng tài khoản).
    2. **Hỏi bạn đã có sẵn team/folder/file chưa**: tạo mới hết, đã có đủ (chỉ dán link), hoặc có một phần.
