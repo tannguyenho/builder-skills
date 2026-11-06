@@ -172,7 +172,8 @@
         "skills/engineering/pr/"
       ],
       "adaptations": [
-        "Bỏ CREDITS.md và metadata.credits (trỏ tới show-me)."
+        "Bỏ CREDITS.md và metadata.credits (trỏ tới show-me).",
+        "Thêm quy tắc ngôn ngữ (mục 'Các mục'): body PR viết tiếng Việt, giữ heading của mẫu, dùng từ tiếng Anh khi chính xác hơn hoặc là thuật ngữ chuyên ngành. Quyết định của user ở audit 2026-11-06, mục 4."
       ]
     },
     "retro": {

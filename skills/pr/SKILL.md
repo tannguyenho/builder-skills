@@ -34,6 +34,8 @@ Dùng mẫu này khi viết body cho PR:
 
 Bỏ hết phần mở đầu và viết thật ngắn. Dùng ngôn ngữ domain của user lấy từ `GLOSSARY.md`.
 
+Viết body PR bằng **tiếng Việt**, giữ nguyên các heading trong mẫu. Dùng từ tiếng Anh khi nó diễn đạt chính xác hơn hoặc là thuật ngữ chuyên ngành (tên API, pattern, lệnh, tên biến, *race condition*, *migration*…), vì dịch gượng những từ này làm reviewer khó đối chiếu với code.
+
 ### Tóm tắt
 
 Chọn cách thể hiện nhỏ nhất mà vẫn làm rõ ý chính.
