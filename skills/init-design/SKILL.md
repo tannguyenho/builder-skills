@@ -1,5 +1,5 @@
 ---
-name: uxf-init-design
+name: init-design
 description: >-
   Khởi tạo kiến trúc Figma cho một dự án/app mới theo chuẩn UXF: kiểm tra trình
   duyệt + đăng nhập Figma + Figma MCP, hỏi tên app, tạo (hoặc bổ sung) file
@@ -14,7 +14,7 @@ description: >-
   nhắc tên skill.
 ---
 
-# UXF Init Design — Khởi tạo kiến trúc Figma cho dự án
+# Init Design — Khởi tạo kiến trúc Figma cho dự án
 
 Skill này dựng "khung nhà" Figma cho một app mới để cả team (designer, dev, AI agent) biết design nằm ở đâu. Nguồn sự thật là file `ARCHITECTURE.md` ở thư mục gốc dự án: mọi team/folder/file tạo trên Figma đều được ghi link vào đó ngay khi tạo xong, nên nếu phiên bị ngắt giữa chừng thì lần chạy sau chỉ cần đọc file là biết còn thiếu gì.
 

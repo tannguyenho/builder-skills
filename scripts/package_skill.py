@@ -2,7 +2,7 @@
 
 Cách dùng:
     python scripts/package_skill.py               # đóng gói mọi skill trong skills/
-    python scripts/package_skill.py uxf-init-design
+    python scripts/package_skill.py init-design
 
 Kết quả nằm ở dist/<tên-skill>.skill (thư mục dist/ không được commit).
 """
