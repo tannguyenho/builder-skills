@@ -29,7 +29,7 @@ Figma
     └── Folder "[Handoff] App"         → ✅ [Handoff] <App>     (flow + mô tả dự án để build app)
 ```
 
-Tên team/folder/file phải **giống từng ký tự** (kể cả emoji, ngoặc vuông, khoảng trắng) vì các skill khác (`uxf-ds-page-manager`, `uxf-snowflake-page-manager`, `uxf-handoff-page-manager`…) và dev dựa vào tên này để tìm file.
+Tên team/folder/file phải **giống từng ký tự** (kể cả emoji, ngoặc vuông, khoảng trắng) vì các skill khác (`ds-page-manager`, `snowflake-page-manager`, `handoff-page-manager`…) và dev dựa vào tên này để tìm file.
 
 Giao tiếp với user bằng tiếng Việt.
 
@@ -233,7 +233,7 @@ Với mỗi folder: mở `https://www.figma.com/files/team/<teamId>/all-folders?
 3. **Các file còn lại của team → MCP**: load skill `figma:figma-create-new-file` nếu có trong danh sách skill (tool yêu cầu vậy), rồi gọi `create_new_file` với `fileName` chính xác, `editorType: "design"`, `planKey: "team::<teamId>"`, `projectId: "<folderId>"`. Tool trả `file_url` → điền link.
 4. MCP vẫn lỗi (không có MCP, sai tài khoản…) → tạo bằng trình duyệt như bước 2.
 
-File để **trống** — skill này không dựng page. Dựng page để sau cho `uxf-ds-page-manager`, `uxf-snowflake-page-manager`, `uxf-handoff-page-manager`.
+File để **trống** — skill này không dựng page. Dựng page để sau cho `ds-page-manager`, `snowflake-page-manager`, `handoff-page-manager`.
 
 ### 4.4 Kiểm tra cuối
 
@@ -243,7 +243,7 @@ File để **trống** — skill này không dựng page. Dựng page để sau 
 
 Thiếu công cụ cho bước nào thì bỏ qua bước đó và ghi rõ trong báo cáo.
 
-Báo cáo cho user: bảng những gì đã **tạo mới** / **dùng lại** kèm link, đường dẫn `ARCHITECTURE.md`, và gợi ý bước tiếp theo (dựng page bằng các skill `uxf-*-page-manager`).
+Báo cáo cho user: bảng những gì đã **tạo mới** / **dùng lại** kèm link, đường dẫn `ARCHITECTURE.md`, và gợi ý bước tiếp theo (dựng page bằng các skill `*-page-manager`).
 
 ---
 

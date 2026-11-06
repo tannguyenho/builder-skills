@@ -9,7 +9,7 @@
     {
       "name": "builder-skills",
       "source": "./",
-      "description": "Bộ skill UXF cho Claude Code / Claude desktop (khởi tạo kiến trúc Figma cho dự án, ...).",
+      "description": "Bộ skill UXF cho Claude Code / Claude desktop (dựng kiến trúc Figma cho dự án, sắp xếp page file Design System / Snowflake / Handoff).",
       "category": "design",
       "keywords": ["figma", "design-system", "uxf", "skills"]
     }
