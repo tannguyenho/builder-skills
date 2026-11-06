@@ -7,3 +7,4 @@ Repo chứa skill của UX Foundation, phát hành dưới dạng plugin Claude 
 - Repo public: không ghi token, email, link Figma/Drive nội bộ vào skill.
 - Sau khi thêm/sửa skill: chạy `python scripts/package_skill.py <tên-skill>` để kiểm tra, cập nhật bảng skill trong `README.md`, tăng `version` trong `.claude-plugin/plugin.json`.
 - Thư mục `dist/` là sản phẩm đóng gói, không commit.
+- Skill dịch từ repo gốc (mattpocock/skills, startup-skill) được khoá phiên bản trong `skills/doctor-audit/references/upstream.json`; sửa skill dịch thì ghi chỗ cố ý khác bản gốc vào `adaptations`. Đồng bộ/khám định kỳ bằng `/doctor-audit`.

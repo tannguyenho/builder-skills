@@ -1,0 +1,223 @@
+{
+  "_comment": "Khoá phiên bản: mỗi skill dịch từ commit nào của repo gốc. doctor-audit đọc/ghi file này. 'adaptations' là chỗ cố ý khác bản gốc — khi đồng bộ phải giữ.",
+  "upstreams": {
+    "mattpocock/skills": {
+      "url": "https://github.com/mattpocock/skills",
+      "synced_commit": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "synced_at": "2026-11-06",
+      "scan": [
+        "skills/engineering/",
+        "skills/productivity/"
+      ],
+      "ignored_skills": [
+        "ask-matt",
+        "diagnosing-bugs",
+        "handoff",
+        "teach",
+        "to-questionnaire",
+        "wait-what"
+      ]
+    },
+    "ferdinandobons/startup-skill": {
+      "url": "https://github.com/ferdinandobons/startup-skill",
+      "synced_commit": "a5f97c317b93caedbb49d28f20e9ec283b2ec087",
+      "synced_at": "2026-11-06",
+      "scan": [
+        ""
+      ],
+      "ignored_skills": [
+        "startup-pitch",
+        "startup-positioning"
+      ]
+    }
+  },
+  "skills": {
+    "setup-agent": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/setup-matt-pocock-skills/"
+      ],
+      "adaptations": [
+        "Đổi tên từ setup-matt-pocock-skills; mọi /setup-matt-pocock-skills → /setup-agent.",
+        "Khối '## Agent skills' và heading con giữ tiếng Anh (skill khác dò theo tên).",
+        "issue-tracker-github.md: không tạo issue vào tannguyenho/builder-skills lẫn mattpocock/skills."
+      ]
+    },
+    "wayfinder": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/wayfinder/"
+      ],
+      "adaptations": [
+        "grilling + domain-modeling → gọi skill grill-with-docs.",
+        "Label wayfinder:* giữ tiếng Anh; heading bản đồ dịch tiếng Việt (anchor link theo heading Việt)."
+      ]
+    },
+    "grill-me": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/productivity/grilling/",
+        "skills/productivity/grill-me/"
+      ],
+      "adaptations": [
+        "Gộp: nội dung = bản dịch đầy đủ grilling/SKILL.md (gốc grill-me chỉ gọi grilling).",
+        "Bỏ disable-model-invocation để Claude và skill khác gọi được."
+      ]
+    },
+    "grill-with-docs": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/productivity/grilling/",
+        "skills/engineering/domain-modeling/",
+        "skills/engineering/grill-with-docs/"
+      ],
+      "adaptations": [
+        "Gộp: Phần 1 = grilling, Phần 2 = domain-modeling; ADR-FORMAT.md, GLOSSARY-FORMAT.md đặt cạnh SKILL.md.",
+        "Bỏ disable-model-invocation vì wayfinder/triage/improve-codebase-architecture gọi tới."
+      ]
+    },
+    "to-spec": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/to-spec/"
+      ],
+      "adaptations": [
+        "/setup-matt-pocock-skills → /setup-agent; template spec dịch tiếng Việt."
+      ]
+    },
+    "to-tickets": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/to-tickets/"
+      ],
+      "adaptations": [
+        "/setup-matt-pocock-skills → /setup-agent; template ticket dịch tiếng Việt; Blocked by:/Status:/Type: giữ tiếng Anh."
+      ]
+    },
+    "triage": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/triage/"
+      ],
+      "adaptations": [
+        "grilling + domain-modeling → grill-with-docs; label triage giữ tiếng Anh; heading '## Agent Brief' giữ tiếng Anh."
+      ]
+    },
+    "implement": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/implement/",
+        "skills/engineering/tdd/"
+      ],
+      "adaptations": [
+        "Skill tdd → references/tdd.md (gộp tdd/SKILL.md + tests.md + mocking.md, link nội bộ thành anchor).",
+        "references/tdd.md phải giống hệt bản trong implement-spec."
+      ]
+    },
+    "implement-spec": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/implement-spec/",
+        "skills/engineering/tdd/"
+      ],
+      "adaptations": [
+        "Skill tdd → references/tdd.md; implementer subagent nhận đường dẫn tuyệt đối tới file này.",
+        "/setup-matt-pocock-skills → /setup-agent."
+      ]
+    },
+    "code-review": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/code-review/"
+      ],
+      "adaptations": [
+        "/setup-matt-pocock-skills → /setup-agent; heading đầu ra '## Standards (chuẩn code)' / '## Spec (đặc tả)'."
+      ]
+    },
+    "codebase-design": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/codebase-design/"
+      ],
+      "adaptations": [
+        "Thuật ngữ module/interface/seam/adapter/depth/leverage/locality giữ tiếng Anh."
+      ]
+    },
+    "improve-codebase-architecture": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/improve-codebase-architecture/"
+      ],
+      "adaptations": [
+        "grilling → grill-me; domain-modeling → grill-with-docs; chữ hiển thị trong báo cáo HTML dịch tiếng Việt, class/code giữ nguyên."
+      ]
+    },
+    "research": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/research/"
+      ],
+      "adaptations": []
+    },
+    "prototype": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/prototype/"
+      ],
+      "adaptations": []
+    },
+    "pr": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/pr/"
+      ],
+      "adaptations": [
+        "Bỏ CREDITS.md và metadata.credits (trỏ tới show-me)."
+      ]
+    },
+    "retro": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/retro/"
+      ],
+      "adaptations": []
+    },
+    "wizard": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/engineering/wizard/"
+      ],
+      "adaptations": [
+        "template.sh: chỉ dịch comment và chuỗi hiển thị, code giữ nguyên; [y/N] giữ nguyên vì regex ^[Yy]."
+      ]
+    },
+    "writing-for-agents": {
+      "upstream": "mattpocock/skills",
+      "paths": [
+        "skills/productivity/writing-for-agents/"
+      ],
+      "adaptations": []
+    },
+    "product-design": {
+      "upstream": "ferdinandobons/startup-skill",
+      "paths": [
+        "startup-design/"
+      ],
+      "adaptations": [
+        "Đổi tên từ startup-design; không nhắc startup-pitch/startup-positioning.",
+        "Ngôn ngữ đầu ra mặc định tiếng Việt (gốc: tiếng Anh).",
+        "Nhãn [Data]/[Estimate]/[Assumption]/… và GO/NO-GO giữ tiếng Anh."
+      ]
+    },
+    "product-competitors": {
+      "upstream": "ferdinandobons/startup-skill",
+      "paths": [
+        "startup-competitors/"
+      ],
+      "adaptations": [
+        "Đổi tên từ startup-competitors; startup-design → product-design.",
+        "Ngôn ngữ đầu ra mặc định tiếng Việt (gốc: tiếng Anh)."
+      ]
+    }
+  }
+}
