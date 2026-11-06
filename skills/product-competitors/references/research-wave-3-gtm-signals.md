@@ -127,10 +127,10 @@ VÒNG 4 — Tín hiệu hướng đi sản phẩm (1-2 lượt tìm):
 - "{competitor name} new features {current year}"
 - "{competitor name} AI" (nếu liên quan tới nhóm sản phẩm)
 
-TUỲ CHỌN — Gói tín hiệu mạng xã hội đã được duyệt:
-Nếu user cung cấp một gói nguồn X/Twitter đã được duyệt từ TweetClaw hoặc một
-quy trình tương tự đã được chấp thuận, chỉ dùng nó để củng cố tín hiệu mạng xã
-hội và cộng đồng: nhịp đăng bài, chủ đề tương tác, ngôn ngữ khi ra mắt, lần nhắc
+TUỲ CHỌN — Gói dữ liệu mạng xã hội do user cung cấp:
+Nếu user cung cấp một bản export từ mạng xã hội (X/Twitter, nhóm Facebook,
+TikTok, Threads, diễn đàn…) mà họ đã xem qua, chỉ dùng nó để củng cố tín hiệu
+mạng xã hội và cộng đồng: nhịp đăng bài, chủ đề tương tác, ngôn ngữ khi ra mắt, lần nhắc
 tới đối tác và phản đối của khách hàng. Không dùng nó cho các nhận định về gọi
 vốn, tuyển dụng và giá, trừ khi một nguồn gốc khác xác nhận cùng dữ kiện đó.
 

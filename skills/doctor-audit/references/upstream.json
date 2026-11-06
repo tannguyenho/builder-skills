@@ -217,7 +217,8 @@
       ],
       "adaptations": [
         "Đổi tên từ startup-competitors; startup-design → product-design.",
-        "Ngôn ngữ đầu ra mặc định tiếng Việt (gốc: tiếng Anh)."
+        "Ngôn ngữ đầu ra mặc định tiếng Việt (gốc: tiếng Anh).",
+        "research-wave-2-sentiment-mining.md và research-wave-3-gtm-signals.md, mục 'TUỲ CHỌN — Gói dữ liệu mạng xã hội': bỏ tên công cụ TweetClaw, mở rộng từ X/Twitter sang mọi mạng xã hội (Facebook, TikTok, Threads, diễn đàn); giữ nguyên các rào an toàn. Quyết định của user ở audit 2026-11-06, mục 18b."
       ]
     }
   }

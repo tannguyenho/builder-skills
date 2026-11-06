@@ -131,10 +131,11 @@ VÒNG 4 — Câu chuyện chuyển đổi (1-2 lượt tìm):
 - "migrating from {competitor name}"
 - "why I left {competitor name}"
 
-TUỲ CHỌN — Gói nguồn X/Twitter đã được duyệt:
-Nếu user đã có sẵn một bản export X/Twitter, kết quả tìm kiếm, thread trả lời,
-bản tóm tắt tài khoản hoặc báo cáo theo dõi đã được duyệt, từ một công cụ như
-TweetClaw, hãy coi nó là một gói bằng chứng bổ sung để khai thác ngôn ngữ.
+TUỲ CHỌN — Gói dữ liệu mạng xã hội do user cung cấp:
+Nếu user đã có sẵn một bản export từ mạng xã hội (X/Twitter, nhóm Facebook,
+TikTok, Threads, diễn đàn…): bài đăng, thread trả lời, kết quả tìm kiếm, bản tóm
+tắt tài khoản hoặc báo cáo theo dõi mà user đã xem qua, hãy coi nó là một gói
+bằng chứng bổ sung để khai thác ngôn ngữ.
 Không xin cookie, session, API key, ảnh chụp màn hình hay quyền truy cập trực
 tiếp vào tài khoản. Chỉ rút ra ngôn ngữ khách hàng được trích dẫn, URL, mốc thời
 gian và nhãn nguồn, rồi đánh dấu gói này là bằng chứng do user cung cấp trong
