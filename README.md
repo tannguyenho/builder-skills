@@ -50,6 +50,8 @@ Bộ skill đi theo vòng đời một sản phẩm: **chuẩn bị** môi trư�
 | [`code-review`](skills/code-review/SKILL.md) | Review thay đổi từ một mốc (commit, nhánh, tag) theo hai trục song song: **Standards** (đúng chuẩn code của repo?) và **Spec** (đúng điều issue/spec yêu cầu?) | 🤖 tự động |
 | [`codebase-design`](skills/codebase-design/SKILL.md) | Bộ từ vựng thiết kế "deep module": interface, seam, adapter, depth… Dùng khi thiết kế/cải thiện interface của một module, làm code dễ test và dễ cho AI đọc | 🤖 tự động |
 | [`improve-codebase-architecture`](skills/improve-codebase-architecture/SKILL.md) | Quét codebase tìm chỗ nên "làm sâu" module, xuất báo cáo HTML trực quan, rồi cùng bạn đào sâu phương án bạn chọn | 🙋 tay |
+| [`research`](skills/research/SKILL.md) | Giao một agent nền nghiên cứu câu hỏi từ nguồn gốc (tài liệu chính thức, mã nguồn, spec), ghi kết quả thành file Markdown trong repo, có trích nguồn | 🤖 tự động |
+| [`prototype`](skills/prototype/SKILL.md) | Dựng prototype dùng xong bỏ để trả lời câu hỏi thiết kế: file HTML bấm thử logic/state, hoặc vài biến thể UI khác hẳn nhau chuyển bằng `?variant=` | 🤖 tự động |
 | [`pr`](skills/pr/SKILL.md) | Viết mô tả PR: tóm tắt, bằng chứng, rủi ro khi merge, phạm vi ảnh hưởng | 🤖 tự động |
 
 ### 🤖 Agent — cải thiện cách agent làm việc
@@ -67,7 +69,7 @@ Bộ skill đi theo vòng đời một sản phẩm: **chuẩn bị** môi trư�
         │                                               │
 🚀  product-design ─ product-competitors              🎨  ds- / snowflake- / handoff-page-manager
         │
-📝  grill-me / grill-with-docs  →  to-spec  →  to-tickets        (việc quá lớn: wayfinder)
+📝  grill-me / grill-with-docs (+ research, prototype)  →  to-spec  →  to-tickets        (việc quá lớn: wayfinder)
         │                                        ▲
         │                              triage (issue từ bên ngoài)
         ▼
@@ -307,6 +309,12 @@ Nhóm này biến ý tưởng mơ hồ thành tài liệu đủ rõ để giao c
 - **Một ticket**: `/builder-skills:implement <ticket hoặc mô tả>`. Claude làm theo TDD (viết test fail trước, rồi code vừa đủ cho pass), chạy typecheck và test, gọi `code-review`, rồi commit vào nhánh hiện tại.
 - **Cả một spec**: `/builder-skills:implement-spec <spec>`. Claude điều phối: mỗi ticket một subagent trong worktree riêng, chạy song song theo đồ thị chặn giữa các ticket, gộp về một **nhánh tích hợp**, review và sửa lần cuối. Hợp với spec đã có ticket từ `to-tickets`.
 - **Review**: nói *"review thay đổi từ main"* hoặc *"review nhánh này"*. `code-review` chạy hai subagent song song: một bên so với chuẩn code của repo (`CODING_STANDARDS.md`, `CONTRIBUTING.md`…), một bên so với issue/spec gốc, rồi báo cáo cạnh nhau.
+- **Nghiên cứu**: nói *"nghiên cứu giúp mình API X có hỗ trợ Y không"*. `research` chạy một agent nền đọc tài liệu chính thức, mã nguồn, spec (không dựa vào bài viết lại), rồi ghi một file Markdown có trích nguồn vào chỗ repo vẫn để ghi chú. Bạn làm việc khác trong lúc chờ.
+- **Prototype**: nói *"làm prototype luồng trạng thái đơn hàng"* hoặc *"dựng thử 3 phương án UI cho trang cài đặt"*. `prototype` chọn một trong hai dạng:
+  - **Logic**: một file HTML tự chứa, bấm đúp là chạy, có nút cho từng action và các tab kịch bản dẫn dắt, để cả designer/PM tự bấm thử state model.
+  - **Giao diện**: 3–5 biến thể khác hẳn nhau về cấu trúc, gắn vào page sẵn có, chuyển bằng `?variant=` và thanh nổi ở đáy (phím ← →).
+
+  Xong thì đưa quyết định vào code thật, còn prototype được commit lên một nhánh dùng xong bỏ, không vào main.
 - **Mô tả PR**: nói *"viết mô tả PR"*; `pr` soạn phần tóm tắt, bằng chứng đã chạy, rủi ro khi merge và phạm vi ảnh hưởng.
 - **Kiến trúc**: `/builder-skills:improve-codebase-architecture` quét repo, xuất báo cáo HTML liệt kê các chỗ nên gom/làm sâu module kèm mức khuyến nghị; chọn một chỗ để Claude cùng bạn đào sâu. `codebase-design` là bộ từ vựng chung (module, interface, seam, adapter…) mà các skill khác dùng; nó tự bật khi bạn bàn về thiết kế interface.
 
@@ -393,7 +401,7 @@ Các skill sau được dịch sang tiếng Việt và chỉnh cho bộ này (đ
 
 | Dự án gốc | Skill trong bộ này |
 | --- | --- |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | `setup-agent` (gốc `setup-matt-pocock-skills`), `wayfinder`, `grill-me` (gộp `grilling`), `grill-with-docs` (gộp `grilling` + `domain-modeling`), `to-spec`, `to-tickets`, `triage`, `implement`, `implement-spec` (kèm `tdd`), `code-review`, `codebase-design`, `improve-codebase-architecture`, `pr`, `retro`, `wizard`, `writing-for-agents` |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | `setup-agent` (gốc `setup-matt-pocock-skills`), `wayfinder`, `grill-me` (gộp `grilling`), `grill-with-docs` (gộp `grilling` + `domain-modeling`), `to-spec`, `to-tickets`, `triage`, `implement`, `implement-spec` (kèm `tdd`), `code-review`, `codebase-design`, `improve-codebase-architecture`, `research`, `prototype`, `pr`, `retro`, `wizard`, `writing-for-agents` |
 | [ferdinandobons/startup-skill](https://github.com/ferdinandobons/startup-skill) | `product-design` (gốc `startup-design`), `product-competitors` (gốc `startup-competitors`) |
 
 Thông báo bản quyền gốc nằm trong [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). Khi bản gốc cập nhật, dịch lại phần thay đổi rồi tăng `version` như mọi lần sửa skill.

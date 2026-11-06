@@ -1,6 +1,6 @@
 {
   "name": "builder-skills",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Bộ skill tiếng Việt cho Builder trên Claude Code / Claude desktop: setup agent, khởi động sản phẩm (product design, đối thủ), dựng & sắp xếp Figma, viết spec/ticket, code (implement, code review, PR), cải thiện agent.",
   "author": {
     "name": "Tan Nguyen",

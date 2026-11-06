@@ -6,7 +6,7 @@ Một số skill trong repo này là bản dịch/chỉnh sửa sang tiếng Vi�
 
 Nguồn: https://github.com/mattpocock/skills
 
-Skill dịch từ dự án này: `setup-agent` (gốc `setup-matt-pocock-skills`), `wayfinder`, `grill-me` (gộp `grilling`), `grill-with-docs` (gộp `grilling` + `domain-modeling`), `to-spec`, `to-tickets`, `triage`, `implement`, `implement-spec` (kèm nội dung `tdd`), `code-review`, `codebase-design`, `improve-codebase-architecture`, `pr`, `retro`, `wizard`, `writing-for-agents`.
+Skill dịch từ dự án này: `setup-agent` (gốc `setup-matt-pocock-skills`), `wayfinder`, `grill-me` (gộp `grilling`), `grill-with-docs` (gộp `grilling` + `domain-modeling`), `to-spec`, `to-tickets`, `triage`, `implement`, `implement-spec` (kèm nội dung `tdd`), `code-review`, `codebase-design`, `improve-codebase-architecture`, `research`, `prototype`, `pr`, `retro`, `wizard`, `writing-for-agents`.
 
 ```
 MIT License
