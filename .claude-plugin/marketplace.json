@@ -4,14 +4,24 @@
     "name": "Tan Nguyen",
     "url": "https://github.com/tannguyenho"
   },
-  "description": "Bộ skill dành cho Builder cho Claude: dựng kiến trúc Figma, quy trình design → handoff.",
+  "description": "Bộ skill dành cho Builder cho Claude: từ ý tưởng sản phẩm, Figma, tài liệu đến code.",
   "plugins": [
     {
       "name": "builder-skills",
       "source": "./",
-      "description": "Bộ skill dành cho Builder cho Claude Code / Claude desktop (dựng kiến trúc Figma cho dự án, sắp xếp page file Design System / Snowflake / Handoff).",
-      "category": "design",
-      "keywords": ["figma", "design-system", "skills"]
+      "description": "Bộ skill tiếng Việt cho Builder trên Claude Code / Claude desktop: setup agent, khởi động sản phẩm (product design, đối thủ), dựng & sắp xếp Figma, viết spec/ticket, code (implement, code review, PR), cải thiện agent.",
+      "category": "productivity",
+      "keywords": [
+        "figma",
+        "design-system",
+        "product",
+        "spec",
+        "code-review",
+        "tdd",
+        "agent",
+        "skills",
+        "vietnamese"
+      ]
     }
   ]
 }
