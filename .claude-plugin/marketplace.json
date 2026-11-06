@@ -1,0 +1,17 @@
+{
+  "name": "tannguyenho",
+  "owner": {
+    "name": "Tan Nguyen",
+    "url": "https://github.com/tannguyenho"
+  },
+  "description": "Bộ skill của UX Foundation cho Claude: dựng kiến trúc Figma, quy trình design → handoff.",
+  "plugins": [
+    {
+      "name": "builder-skills",
+      "source": "./",
+      "description": "Bộ skill UXF cho Claude Code / Claude desktop (khởi tạo kiến trúc Figma cho dự án, ...).",
+      "category": "design",
+      "keywords": ["figma", "design-system", "uxf", "skills"]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "builder-skills",
+  "version": "0.1.0",
+  "description": "Bộ skill UXF cho Claude Code / Claude desktop (khởi tạo kiến trúc Figma cho dự án, ...).",
+  "author": {
+    "name": "Tan Nguyen",
+    "url": "https://github.com/tannguyenho"
+  },
+  "repository": "https://github.com/tannguyenho/builder-skills",
+  "keywords": ["figma", "design-system", "uxf", "skills"],
+  "skills": "./skills/"
+}
