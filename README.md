@@ -1,10 +1,10 @@
 # builder-skills
 
-Bộ skill của **UX Foundation** cho Claude (Claude Code, app Claude desktop, claude.ai). Mỗi skill là một quy trình được đóng gói sẵn: Claude đọc hướng dẫn trong skill và làm theo, nên cả team chạy cùng một cách, cùng một chuẩn.
+Bộ skill phù hợp nhất khi chạy trên Claude
 
-Bộ skill đi theo vòng đời một sản phẩm: **chuẩn bị** môi trường → **nghĩ sản phẩm** → **dựng Figma** → **viết tài liệu** → **code** → **cải thiện agent**. Toàn bộ bằng tiếng Việt; một phần được dịch và chỉnh từ [mattpocock/skills](https://github.com/mattpocock/skills) và [ferdinandobons/startup-skill](https://github.com/ferdinandobons/startup-skill) (xem [Nguồn & giấy phép](#4-nguồn--giấy-phép)).
+Bộ skill đi theo vòng đời một sản phẩm: **chuẩn bị** môi trường → **nghĩ sản phẩm** → **dựng Figma** → **viết tài liệu** → **code** → **cải thiện agent**.
 
-**Cách gọi:** cột *Gọi* ghi `🙋 tay` nghĩa là skill chỉ chạy khi bạn gõ lệnh slash (vd `/builder-skills:to-spec`), vì nó làm việc lớn hoặc ghi ra ngoài; `🤖 tự động` nghĩa là Claude tự gọi khi câu bạn nói khớp mô tả, bạn vẫn gõ lệnh slash được. Cài bằng plugin thì lệnh có tiền tố `builder-skills:`; chép tay thì gõ thẳng `/<tên-skill>`.
+**Cách gọi:** cột *Gọi* ghi `🙋 tay` nghĩa là skill chỉ chạy khi bạn gõ lệnh slash (vd `/builder-skills:to-spec`), vì nó làm việc lớn hoặc ghi ra ngoài; `🤖 tự động` nghĩa là Claude tự gọi khi câu bạn nói khớp mô tả, bạn vẫn gõ lệnh slash được.
 
 ## Danh sách skill
 
@@ -63,14 +63,14 @@ Bộ skill đi theo vòng đời một sản phẩm: **chuẩn bị** môi trư�
 | [`writing-for-agents`](skills/writing-for-agents/SKILL.md) | Cách viết tài liệu cho agent đọc: skill, `CLAUDE.md`, `AGENTS.md` | 🤖 tự động |
 | [`doctor-audit`](skills/doctor-audit/SKILL.md) | Khám bộ skill này: đồng bộ skill dịch với bản mới nhất của repo gốc (chỉ dịch phần thay đổi), test, đề xuất lược bớt và cải thiện từng skill. Chạy trong bản clone của repo builder-skills | 🙋 tay |
 
-### Luồng dùng gợi ý
+### Luồng sử dụng
 
 ```
 ⚙️  setup-agent  (một lần cho mỗi repo)        init-figma-design  (một lần cho mỗi app)
         │                                               │
 🚀  product-design ─ product-competitors              🎨  ds- / snowflake- / handoff-page-manager
         │
-📝  grill-me / grill-with-docs (+ research, prototype)  →  to-spec  →  to-tickets        (việc quá lớn: wayfinder)
+📝  wayfirder  → grill-me / grill-with-docs (+ research, prototype)  →  to-spec  →  to-tickets
         │                                        ▲
         │                              triage (issue từ bên ngoài)
         ▼
@@ -90,8 +90,6 @@ Chọn **một** trong ba cách. Đừng cài cùng một skill bằng hai cách
 
 ### Cách A — Plugin cho Claude Code / app Claude desktop (khuyên dùng)
 
-Cài một lần, sau này cập nhật bằng một lệnh. Chạy trong terminal:
-
 ```bash
 claude plugin marketplace add tannguyenho/builder-skills
 ```
@@ -102,21 +100,7 @@ claude plugin install builder-skills@tannguyenho
 
 Hoặc gõ trong phiên `claude` tương tác: `/plugin marketplace add tannguyenho/builder-skills` rồi `/plugin install builder-skills@tannguyenho`.
 
-Plugin cài ở phạm vi user nên dùng được cả trong terminal lẫn tab **Code** của app Claude desktop. Mở phiên mới để Claude nạp skill.
-
-**Cập nhật** khi repo có skill mới hoặc bản sửa (lệnh 1 tải bản mới của repo, lệnh 2 cài bản đó), rồi mở phiên mới:
-
-```bash
-claude plugin marketplace update tannguyenho
 ```
-
-```bash
-claude plugin update builder-skills@tannguyenho
-```
-
-> **Tránh trùng skill:** nếu trước đây bạn đã có các skill này dưới tên cũ (`uxf-init-design`, `uxf-ds-page-manager`, `uxf-snowflake-page-manager`, `uxf-handoff-page-manager`) — chép tay trong `~/.claude/skills/` hoặc tải lên claude.ai — hãy xoá bản cũ sau khi cài plugin. Skill tải lên claude.ai được đồng bộ về app desktop, nên phải xoá trong phần **Skills** ở Settings của claude.ai.
->
-> Nếu đã cài bộ gốc tiếng Anh (plugin `mattpocock-skills` hoặc `startup-skill`), nên gỡ hoặc tắt để Claude không phải chọn giữa hai bản cùng chức năng.
 
 ### Cách B — Chép tay vào thư mục skills
 
@@ -130,22 +114,6 @@ Rồi chép thư mục skill cần dùng vào một trong hai nơi:
 
 - `~/.claude/skills/<tên-skill>/` — dùng cho mọi dự án (Windows: `C:\Users\<bạn>\.claude\skills\`).
 - `<dự án>/.claude/skills/<tên-skill>/` — chỉ dùng trong dự án đó, commit cùng dự án để cả team có.
-
-Cách này không tự cập nhật: muốn bản mới thì `git pull` rồi chép lại.
-
-### Cách C — claude.ai (web / app chat)
-
-claude.ai nhận skill dạng file `.skill` (zip của thư mục skill). Đóng gói:
-
-```bash
-python scripts/package_skill.py
-```
-
-Lệnh trên đóng gói mọi skill vào `dist/<tên-skill>.skill`; muốn một skill thì thêm tên, vd `python scripts/package_skill.py ds-page-manager`. Tải file lên trong phần **Skills** ở Settings của claude.ai.
-
-> Lưu ý: `init-figma-design` cần trình duyệt để tạo Team/Folder trên Figma, nên chạy tốt nhất ở **tab Code của app Claude desktop**. Trên claude.ai chỉ dùng được phần ghi link có sẵn vào `ARCHITECTURE.md`. Ba skill `*-page-manager` chạy được ở mọi nơi có kết nối Figma.
->
-> Nhóm **Doc**, **Coding** và `setup-agent`, `wayfinder`, `retro`, `wizard` cần đọc/ghi file, chạy git và CLI (`gh`, `glab`) trong repo, nên dùng trong **Claude Code** (terminal hoặc tab Code). Trên claude.ai dùng tốt `grill-me`, `product-design`, `product-competitors`, `writing-for-agents`.
 
 ---
 
@@ -203,37 +171,6 @@ Nếu bạn **đã có sẵn** đủ team/folder/file và chỉ cần ghi link t
    4. Tạo hoặc bổ sung `ARCHITECTURE.md`, rồi tạo lần lượt Team → Folder → File trên Figma. Mỗi mục tạo xong được ghi link ngay.
    5. Kiểm tra lại và báo cáo kèm link.
 
-**Những bước bạn phải tự làm**
-
-- **Đăng nhập Figma** trong Browser pane. Claude không gõ mật khẩu thay bạn.
-- **Tích ô đồng ý điều khoản** ở trang chọn gói Education của mỗi team mới. Claude dừng ở trang đó, chờ bạn tích rồi mới bấm "Complete upgrade".
-
-**Bị ngắt giữa chừng?**
-
-Cứ chạy lại skill. Mục nào trong `ARCHITECTURE.md` còn ghi `Link figma điền tại đây` là mục chưa làm; skill chỉ làm tiếp những mục đó và không tạo trùng.
-
-**Kết quả mẫu**
-
-```markdown
-<!-- Design Figma Architecture Start -->
-## 🎨 Design Figma Architecture
-
-### Team
-
-| Team | Link |
-| --- | --- |
-| 0. Design system | https://www.figma.com/files/team/<teamId> |
-| 1. My App | https://www.figma.com/files/team/<teamId> |
-
-### My App
-
-#### Bảng Folder My App
-...
-#### Bảng File My App
-...
-<!-- Design Figma Architecture End -->
-```
-
 ### 2.2 🚀 Start product
 
 #### `product-design` — thiết kế và thẩm định ý tưởng sản phẩm
@@ -258,42 +195,6 @@ Nói *"đối thủ của mình là ai"*, *"so sánh giá các tool quản lý s
 #### `wayfinder` — tìm đường cho khối việc lớn
 
 Dùng khi việc quá lớn để một phiên agent ôm hết (vd "chuyển cả app sang kiến trúc mới"). Gõ `/builder-skills:wayfinder`. Skill tạo một **bản đồ** (issue cha) trên issue tracker, chia thành các ticket quyết định thuộc 4 loại: nghiên cứu, prototype, chất vấn (grilling, dùng `grill-with-docs`), và việc cụ thể. Sau đó giải từng ticket theo thứ tự cho đến khi đường tới **đích đến** (một spec, một quyết định hay một thay đổi) rõ ràng. Cần chạy `setup-agent` trước.
-
-### 2.3 🎨 Figma — ba skill `*-page-manager`
-
-Ba skill cùng một cách làm, mỗi skill áp chuẩn cho một loại file:
-
-| Skill | Áp cho file | Cấu trúc page chuẩn |
-| --- | --- | --- |
-| `ds-page-manager` | `[Design System] Version x.y.z` | `🖼️ Cover` → các nhóm Category viết HOA kèm emoji (`🎨 FOUNDATION`, `⚡ ACTIONS`, `✏️ DATA ENTRY`, `📊 DATA DISPLAY`, `🧩 PATTERNS`, `📐 TEMPLATES`), mỗi component một sub-page `→ Tên` |
-| `snowflake-page-manager` | `❄️ [Snowflake] <App>` | `🖼️ COVER` → `📦 BASE` → `🍀 COMPONENT` (A–Z) → `🖥️ SCREEN`, mỗi mục một sub-page `→ Tên` |
-| `handoff-page-manager` | `✅ [Handoff] <App>` | `📋 CHANGE LOG` → `🦶 USER FLOW` → `📐 UI GUIDELINE` → `🚧 DESIGN QA` → `🖼️ COVER` (cover nằm **cuối**) |
-
-Quy ước chung của cả ba:
-
-- Sub-page bắt đầu bằng `→ ` (mũi tên thật, không phải `->`).
-- Page tên `---` để trống, làm vạch ngăn giữa các nhóm.
-- Emoji chỉ dùng ở tên page nhóm, **không** dùng trong tên component.
-
-#### Cần chuẩn bị
-
-- **Figma MCP** đã kết nối, bằng tài khoản có quyền sửa file (ghế Full). App desktop: Settings → Connectors → Figma.
-- Link file Figma cần sắp xếp. Nếu dự án đã chạy `init-figma-design`, link nằm sẵn trong `ARCHITECTURE.md`.
-
-#### Chạy
-
-Mở dự án trong Claude rồi nói, kèm link file nếu có, ví dụ:
-
-- `Sắp xếp page cho file DS <link>`
-- `Kiểm tra cấu trúc page file Snowflake của app này đúng chuẩn chưa`
-- `Tạo các page còn thiếu cho file handoff <link>`
-
-Hoặc gọi thẳng `/builder-skills:ds-page-manager`, `/builder-skills:snowflake-page-manager`, `/builder-skills:handoff-page-manager`.
-
-#### Skill sẽ và không làm gì
-
-- **Có:** tạo page còn thiếu, đổi tên page, sắp xếp lại thứ tự page theo chuẩn.
-- **Không:** di chuyển, cắt/dán hay đổi chỗ bất kỳ component, frame, instance nào. Nội dung trong mỗi page giữ nguyên. Tên `→ …` trong chuẩn chỉ là tên gợi ý cho page, không phải lệnh chuyển component sang đó.
 
 ### 2.4 📝 Doc
 
@@ -397,22 +298,3 @@ Plugin tự nạp mọi thư mục trong `skills/`, nên thêm skill mới **kh�
 5. **Kiểm tra toàn bộ** bằng `python3 skills/doctor-audit/scripts/audit.py check <tên-skill>` (link hỏng, skill không tồn tại, đoạn chưa dịch, link nội bộ…).
 6. **Cập nhật README**: thêm một dòng vào bảng skill ở đầu file, và một mục hướng dẫn dùng nếu skill cần chuẩn bị gì.
 7. **Tăng `version`** trong `.claude-plugin/plugin.json` (vd `0.1.0` → `0.2.0` khi thêm skill, `0.1.1` khi sửa nhỏ), rồi commit và push. Mọi người lấy bản mới bằng `claude plugin marketplace update tannguyenho` rồi `claude plugin update builder-skills@tannguyenho`.
-
-### Lưu ý khi viết skill
-
-- Repo này **public**: không đưa vào skill token, mật khẩu, email, link Figma/Drive nội bộ của khách hàng.
-- Thao tác thật trên dịch vụ ngoài (tạo team, gửi tin, xoá file…) phải có bước **xin xác nhận user** trước khi làm.
-- Những việc Claude không được làm thay (đăng nhập, đồng ý điều khoản, thanh toán) phải ghi rõ là user tự làm.
-
----
-
-## 4. Nguồn & giấy phép
-
-Các skill sau được dịch sang tiếng Việt và chỉnh cho bộ này (đổi tên, gộp skill phụ thuộc để mỗi skill tự chạy được), từ hai dự án giấy phép MIT:
-
-| Dự án gốc | Skill trong bộ này |
-| --- | --- |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | `setup-agent` (gốc `setup-matt-pocock-skills`), `wayfinder`, `grill-me` (gộp `grilling`), `grill-with-docs` (gộp `grilling` + `domain-modeling`), `to-spec`, `to-tickets`, `triage`, `implement`, `implement-spec` (kèm `tdd`), `code-review`, `codebase-design`, `improve-codebase-architecture`, `research`, `prototype`, `pr`, `retro`, `wizard`, `writing-for-agents` |
-| [ferdinandobons/startup-skill](https://github.com/ferdinandobons/startup-skill) | `product-design` (gốc `startup-design`), `product-competitors` (gốc `startup-competitors`) |
-
-Thông báo bản quyền gốc nằm trong [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). Khi bản gốc cập nhật, dịch lại phần thay đổi rồi tăng `version` như mọi lần sửa skill.
